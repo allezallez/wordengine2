@@ -1,7 +1,0 @@
-/home/ec2-user/jaxws/hello-webclient/target/generated-sources/wsimport/javaeetutorial/helloservice/endpoint/HelloService.java
-/home/ec2-user/jaxws/hello-webclient/target/generated-sources/wsimport/javaeetutorial/helloservice/endpoint/SayHello.java
-/home/ec2-user/jaxws/hello-webclient/target/generated-sources/wsimport/javaeetutorial/helloservice/endpoint/package-info.java
-/home/ec2-user/jaxws/hello-webclient/target/generated-sources/wsimport/javaeetutorial/helloservice/endpoint/ObjectFactory.java
-/home/ec2-user/jaxws/hello-webclient/target/generated-sources/wsimport/javaeetutorial/helloservice/endpoint/SayHelloResponse.java
-/home/ec2-user/jaxws/hello-webclient/src/main/java/javaeetutorial/hello/webclient/HelloServlet.java
-/home/ec2-user/jaxws/hello-webclient/target/generated-sources/wsimport/javaeetutorial/helloservice/endpoint/Hello.java

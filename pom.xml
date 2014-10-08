@@ -2,9 +2,9 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.wordengine.statsservice</groupId>
     <version>1</version> 
-    <artifactId>jaxws</artifactId>
+    <artifactId>WordEngine</artifactId>
     <packaging>pom</packaging>
-    <name>jaxws</name>
+    <name>WordEngine</name>
   
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
@@ -61,8 +61,8 @@
     
     
     <modules>
-        <module>helloservice-war</module>
-        <module>hello-webclient</module>
+        <module>WordEngineServer</module>
+        <module>WordEngineClient</module>
     </modules>
     
     <build>

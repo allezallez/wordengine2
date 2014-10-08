@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.wordengine.statsservice</groupId>
+    <artifactId>WordEngineClient</artifactId>
+    <packaging>war</packaging>
+    <name>WordEngineClient</name>
+    <description>A simple web service client for statsservice.</description>
+    
+    <parent>
+        <groupId>com.wordengine.statsservice</groupId>
+        <artifactId>WordEngine</artifactId>
+        <version>1</version>
+    </parent>
+    
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.jvnet.jax-ws-commons</groupId>
+                <artifactId>jaxws-maven-plugin</artifactId>
+                <version>${jaxws-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlDirectory>${basedir}/../WordEngineServer/target/generated-sources/wsdl</wsdlDirectory>
+                            <wsdlFiles>
+                                <wsdlFile>StatsServiceService.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <wsdlLocation>http://54.68.28.75/:8080/WordEngineServer/StatsServiceService?WSDL</wsdlLocation>
+                            <packageName>wordengine.statsservice.endpoint</packageName>
+                        </configuration>
+                        <phase>generate-sources</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
