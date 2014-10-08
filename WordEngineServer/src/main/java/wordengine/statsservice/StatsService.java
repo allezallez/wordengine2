@@ -18,11 +18,12 @@ public class StatsService {
   // constants
   private static final String LARGE_DICT_FILENAME = "../../../resources/LARGE";
   private static final int MAX_WORD_LENGTH = 90;
-  private static final int MIN_WORD_LENGTH = 1;
+  //private static final int MIN_WORD_LENGTH = 1;
   private static final int TOP_N_WORDS = 10;
   private static final int ALPHABET_SIZE = 26;
 
-  private final HashMap<Integer, ArrayList<Word>> dictionary = new HashMap<Integer, ArrayList<Word>>();
+  //private final HashMap<Integer, ArrayList<Word>> dictionary = new HashMap<Integer, ArrayList<Word>>();
+  private final ArrayList<ArrayList<Word>> masterDictionary = new ArrayList<ArrayList<Word>>();
 
 //  public static void main(String[] args) {
 //    StatsService test = new StatsService();
@@ -35,8 +36,9 @@ public class StatsService {
 //  }
 
   public StatsService() {
-    for (int i = MIN_WORD_LENGTH; i < MAX_WORD_LENGTH; i++) {
-      dictionary.put(i, new ArrayList<Word>());
+    for (int i = 0; i < MAX_WORD_LENGTH; i++) {
+      //dictionary.put(i, new ArrayList<Word>());
+      masterDictionary.add(new ArrayList<Word>());
     }
 
     String[] aLine;
@@ -45,7 +47,8 @@ public class StatsService {
       BufferedReader br = new BufferedReader(new FileReader(LARGE_DICT_FILENAME));
       while (br.ready()) {                  //input whole file
         aLine = br.readLine().split("\\s+");           //splits at whitespace
-        dictionary.get(aLine[0].length()).add(new Word(aLine[0], Integer.parseInt(aLine[2])));
+        //dictionary.get(aLine[0].length()).add(new Word(aLine[0], Integer.parseInt(aLine[2])));
+        masterDictionary.get(aLine[0].length()).add(new Word(aLine[0], Integer.parseInt(aLine[2])));
       }
     } catch(IOException e) {
       System.out.println(e);
@@ -87,7 +90,8 @@ public class StatsService {
 
   private void predictiveNWords(Word partial, char letter, TreeSet<Word> topWords) {
     HashSet<String> tops = new HashSet<String>();
-    ArrayList<Word> vocab = dictionary.get(partial.getLength());
+    //ArrayList<Word> vocab = dictionary.get(partial.getLength());
+    ArrayList<Word> vocab = masterDictionary.get(partial.getLength());
     ArrayList<Word> compatibleWords = new ArrayList<Word>();
     ArrayList<Character> guesses = new ArrayList<Character>();
 
@@ -118,7 +122,8 @@ public class StatsService {
     double sumProb = 0;
     long sumCount = 0;
 
-    ArrayList<Word> vocab = dictionary.get(partial.getLength());
+    //ArrayList<Word> vocab = dictionary.get(partial.getLength());
+    ArrayList<Word> vocab = masterDictionary.get(partial.getLength());
     ArrayList<Word> compatibleWords = new ArrayList<Word>();
 
     for (Word cw: vocab) {        //for every Word in the vocab
