@@ -15,6 +15,7 @@ import javax.jws.WebService;
 
 @WebService
 public class StatsService {
+  // constants
   private static final String LARGE_DICT_FILENAME = "../../../resources/LARGE";
   private static final int MAX_WORD_LENGTH = 90;
   private static final int MIN_WORD_LENGTH = 1;
