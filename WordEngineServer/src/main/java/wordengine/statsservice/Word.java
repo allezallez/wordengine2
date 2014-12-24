@@ -1,69 +1,88 @@
-package wordengine.statsservice;
+//package wordengine.statsservice;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class Word implements Comparable<Word> {
 
-  private int count;         //population count:
-  private double posterior;  //posterior odds (will be updated many times)
-  private String theWord;   //this Word
+  private static final HashSet<String> partsOfSpeech = new HashSet<String>(Arrays.asList(
+      "ALL", "NOUN", "VERB", "ADJ", "ADV", "PRON", "DET", "ADP", "NUM", "CONJ", "PART", ".", "X"));
+
+  private String sortBy = "ALL";
+  private String thisWord;
+  private HashMap<String, Long> partOfSpeechAndCounts;
 
   Word() {
-    this.count = 0;
-    this.theWord = "";
+    this.thisWord = "";
+    this.partOfSpeechAndCounts = new HashMap<String, Long>();
+    initializePartsOfSpeech();
   }
 
-  Word(String Word_, int count_) {
-    this.count = count_;
-    this.theWord = Word_;
+  Word(String Word_) {
+    this.thisWord = Word_;
+    this.partOfSpeechAndCounts = new HashMap<String, Long>();
+    initializePartsOfSpeech();
   }
 
-  Word(String Word_, int count_, double posterior_) {
-    this.count = count_;
-    this.theWord = Word_;
-    this.posterior = posterior_;
+  Word(String Word_, long count) {
+    this.thisWord = Word_;
+    this.partOfSpeechAndCounts = new HashMap<String, Long>();
+    initializePartsOfSpeech();
+  }
+
+  public double getPartOfSpeechPercent(String part) {
+    return ((double) this.partOfSpeechAndCounts.get(part) 
+        / (double) this.partOfSpeechAndCounts.get("ALL"));
+  }
+
+  public HashMap<String, Long> getPartOfSpeechMap() {
+    return this.partOfSpeechAndCounts;
+  }
+
+  public char letterAt(int index) {
+    return this.thisWord.charAt(index);
+  }
+
+  public void addPartOfSpeech(String part, long partCount) {
+    this.partOfSpeechAndCounts.put(part, partCount);
+  }
+
+  public long getPartOfSpeechCount(String part) {
+    return this.partOfSpeechAndCounts.get(part);
   }
 
   public int getLength() { 
-    return theWord.length(); 
-  }
-
-  public char letterAt(int index) { 
-    return theWord.charAt( index ); 
+    return this.thisWord.length(); 
   }
 
   public void setWord(String newWord) { 
-    this.theWord = newWord; 
+    this.thisWord = newWord; 
   }
 
   public String getWord() { 
-    return theWord; 
+    return this.thisWord; 
   }
 
-  public int getCount() { 
-    return count; 
+  private void initializePartsOfSpeech() {
+    partOfSpeechAndCounts.put("ALL", 0L);
   }
 
-  public void setCount(int count_) { 
-    this.count = count_; 
+  public void setSortBy(String part) {
+    if (!partsOfSpeech.contains(part)) {
+      System.out.println("Error, can no sort by " + part);
+      return;
+    }
+    this.sortBy = part;
   }
 
-  public double getPosterior() { 
-    return posterior; 
-  }
-
-  public void setPosterior( double posterior_ ) {
-    this.posterior = posterior_;
-  }
-
-  public void setLetterAt(char letter, int index) {
-    String temp = theWord.substring(0, index) + letter + theWord.substring(index + 1);
-    this.theWord = temp;
-  }
-
-  public int compareTo(Word other) {
-    if (this.getPosterior() > other.getPosterior()) 
+  public int compareTo(Word o) {
+    if (this.getPartOfSpeechCount(sortBy) > o.getPartOfSpeechCount(sortBy)) {
       return -1;
-    if (this.getPosterior() == other.getPosterior()) 
+    }
+    if (this.getPartOfSpeechCount(sortBy) == o.getPartOfSpeechCount(sortBy)) {
       return 0;
+    }
     return 1;
   }
 }
